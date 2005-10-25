@@ -1,0 +1,61 @@
+#!/usr/bin/perl
+
+=head1 NAME 
+
+ans2png - Convert ansi files to png
+
+=head1 SYNOPSIS
+
+    % ans2png [-t] file.ans > file.png
+
+=head1 DESCRIPTION
+
+This is a simple command-line tool to help you convert
+ansi files to png images. Use the -t switch to create a
+thumbnail.
+
+=cut
+
+use strict;
+use warnings;
+
+use Image::ANSI;
+use Getopt::Std;
+use Pod::Usage;
+
+our $VERSION = '0.01';
+
+my %options;
+getopts( 't', \%options );
+
+my $file = shift;
+
+pod2usage( { verbose => 1 } ) if !defined( $file );
+
+my $ansi = Image::ANSI->new( file => $file );
+
+binmode STDOUT;
+
+if( $options{ t } ) {
+	print $ansi->as_png( mode => 'thumbnail' );
+}
+else {
+	print $ansi->as_png( mode => 'full' );
+}
+
+=head1 AUTHOR
+
+=over 4 
+
+=item * Brian Cassidy E<lt>bricas@cpan.orgE<gt>
+
+=back
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright 2005 by Brian Cassidy
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself. 
+
+=cut
