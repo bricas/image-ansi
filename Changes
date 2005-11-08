@@ -1,5 +1,9 @@
 Revision history for Perl extension Image::ANSI
 
+0.05  Mon Nov 07 2005
+	- removed width restriction
+	- added clear_line() method
+
 0.04  Wed Sep 14 2005
 	- added ANSIMation capabilities
 

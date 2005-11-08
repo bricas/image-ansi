@@ -26,7 +26,6 @@ use constant S_CHK_B    => 1;
 use constant S_WAIT_LTR => 2;
 use constant S_END      => 3;
 
-use constant WIDTH      => 80;
 use constant TABSTOP    => 8;
 
 our $VERSION  = '0.03';
@@ -221,10 +220,6 @@ sub x {
 		$self->{ x } = 0;
 	}
 
-	if( $self->{ x } > WIDTH - 1 ) {
-		$self->{ x } = WIDTH - 1;
-	}
-
 	return $self->{ x };
 }
 
@@ -384,10 +379,7 @@ clears the pixels on the current line.
 sub clear_line {
 	my $self = shift;
 
-	for( 0..WIDTH - 1 ) {
-		my $pixel = $self->getpixel( $_, $self->y );
-		$self->store( ' ' , $_, $self->y, $pixel->attr );
-	}
+	$self->ansi->clear_line( $self->y );
 }
 
 =head2 clear_screen( )
@@ -452,14 +444,7 @@ sub store {
 	}
 	else {
 		$self->putpixel( $self->x, $self->y, $char, $attr );
-
-		if( $self->x == WIDTH - 1 ) {
-			$self->y( $self->y + 1 );
-			$self->x( 0 );
-		}
-		else {
-			$self->x( $self->x + 1 );
-		}
+		$self->x( $self->x + 1 );
 	}
 }
 
@@ -469,10 +454,7 @@ same as the pixel() method
 
 =cut
 
-sub putpixel {
-	my $self = shift;
-	return $self->pixel( @_ );
-}
+*putpixel = \&pixel;
 
 =head2 getpixel( @args )
 
@@ -480,10 +462,7 @@ same as the pixel() method
 
 =cut
 
-sub getpixel {
-	my $self = shift;
-	return $self->pixel( @_ );
-}
+*getpixel = \&pixel;
 
 =head2 pixel( $x, $y [, $char, $attr] )
 

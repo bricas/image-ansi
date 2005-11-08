@@ -57,9 +57,7 @@ use warnings;
 use Carp;
 use File::SAUCE;
 
-use constant WIDTH => 80;
-
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 METHODS
 
@@ -112,6 +110,7 @@ sub clear {
 
 	$self->{ image } = [];
 	$self->height( 0 );
+	$self->width( 0 );
 }
 
 =head2 read( %options )
@@ -136,10 +135,7 @@ Sets the pixel at $x, $y with $pixel (which should be an Image::ANSI::Pixel).
 
 =cut
 
-sub putpixel {
-	my $self = shift;
-	return $self->pixel( @_ );
-}
+*putpixel = \&pixel;
 
 =head2 getpixel( $x, $y )
 
@@ -147,10 +143,7 @@ Returns the Image::ANSI::Pixel object at $x, $y (or undef).
 
 =cut
 
-sub getpixel {
-	my $self = shift;
-	return $self->pixel( @_ );
-}
+*getpixel = \&pixel;
 
 =head2 pixel( [$x, $y, $pixel] )
 
@@ -164,12 +157,15 @@ sub pixel {
 
 	return if $x > $self->width or $x < 0 or $y < 0;
 
+	my $image = $self->{ image };
  	if( defined $pixel ) {
-		$self->{ image }->[ $y * $self->width + $x ] = $pixel;
+		$image->[ $y ] = [ ] unless defined $image->[ $y ];
+		$image->[ $y ]->[ $x ] = $pixel;
 		$self->height( $y + 1 ) if $y + 1 > $self->height;
+		$self->width( $x + 1 ) if $x + 1 > $self->width;
 	}
 
-	return $self->{ image }->[ $y * $self->width + $x ];
+	return $image->[ $y ]->[ $x ];
 }
 
 =head2 width( )
@@ -179,7 +175,12 @@ Returns the image width.
 =cut
 
 sub width {
-	return WIDTH;
+	my $self  = shift;
+	my $width = shift;
+
+	$self->{ _WIDTH } = $width if defined $width;
+
+	return $self->{ _WIDTH };
 }
 
 =head2 height( )
@@ -223,11 +224,26 @@ sub max_x {
 
 	my $max = 0;
 
-	for my $x ( 0..79 ) {
+	for my $x ( 0..$self->width - 1 ) {
 		$max = $x if $self->getpixel( $x, $y );
 	}
 
 	return $max
+}
+
+=head2 clear_line( $y )
+
+clears lines $y.
+
+=cut
+
+sub clear_line {
+	my $self = shift;
+	my $y    = shift;
+
+	my $line = $self->{ image }->[ $y ];
+
+	$self->{ image }->[ $y ] = [ ] if defined $line;
 }
 
 =head2 as_ascii( )
@@ -304,8 +320,9 @@ sub as_png_thumbnail {
 
 	my $height = int( $font->height / 8 + 0.5 );
 	$height    = 1 unless $height;
+	my $width  = $self->width;
 	my $crop   = ( defined $options{ crop } and $options{ crop } > 0 and $options{ crop } < $self->height ) ? $options{ crop } : $self->height;
-	my $image  = GD::Image->new( 80, $crop * $height, 1 );
+	my $image  = GD::Image->new( $width, $crop * $height, 1 );
 
 	my @colors;
 
@@ -329,7 +346,7 @@ sub as_png_thumbnail {
 	my $intensity = $font->intensity_map;
 
 	for my $y ( 0..$crop - 1 ) {
-		for my $x ( 0..$self->width - 1 ) { 
+		for my $x ( 0..$width - 1 ) { 
 			my $pixel = $self->getpixel( $x, $y );
 
 			next unless $pixel;
@@ -383,7 +400,7 @@ sub as_png_full {
 	my $height     = $font->height;
 	my $width      = $font->width;
 
-	my $image  = GD::Image->new( 80 * $width, $crop * $height );
+	my $image  = GD::Image->new( $self->width * $width, $crop * $height );
 
 	my @colors;
 	my $pal_class = $options{ palette } || 'Image::ANSI::Palette::VGA';
