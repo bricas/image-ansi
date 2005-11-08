@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!C:\Perl\bin\perl.exe 
 
 =head1 NAME 
 
@@ -6,7 +6,7 @@ ans2png - Convert ansi files to png
 
 =head1 SYNOPSIS
 
-    % ans2png [-t] file.ans > file.png
+    % ans2png [-t] [-f font.fnt] file.ans > file.png
 
 =head1 DESCRIPTION
 
@@ -26,7 +26,7 @@ use Pod::Usage;
 our $VERSION = '0.01';
 
 my %options;
-getopts( 't', \%options );
+getopts( 'tf:', \%options );
 
 my $file = shift;
 
@@ -40,7 +40,7 @@ if( $options{ t } ) {
 	print $ansi->as_png( mode => 'thumbnail' );
 }
 else {
-	print $ansi->as_png( mode => 'full' );
+	print $ansi->as_png( mode => 'full', font => $options{ f } );
 }
 
 =head1 AUTHOR

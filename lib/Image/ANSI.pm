@@ -313,6 +313,8 @@ sub as_png_thumbnail {
 	%options   = @_ if @_ % 2 == 0;
 	$options{ zoom } = 1 unless defined $options{ zoom };
 
+	require GD;
+
 	my $font_class = $options{ font } || 'Image::ANSI::Font::8x16';
 	eval "require $font_class;";
 	croak $@ if $@;
@@ -393,18 +395,19 @@ sub as_png_full {
 	my $crop   = ( defined $options{ crop } and $options{ crop } > 0 and $options{ crop } < $self->height ) ? $options{ crop } : $self->height;
 
 	my $font_class = $options{ font } || 'Image::ANSI::Font::8x16';
-	eval "require $font_class;";
-	croak $@ if $@;
+
+	require GD;
 
 	my $font;
 	if( $font_class =~ /\.fnt$/ ) {
-		require GD::Font;
 		$font = GD::Font->load( $font_class );
 	}
 	elsif( UNIVERSAL::isa( $font_class, 'GD::Font' ) ) {
 		$font = $font_class;
 	}
 	else {
+		eval "require $font_class;";
+		croak $@ if $@;
 		$font = $font_class->new->as_gd;
 	}
 	my $height     = $font->height;
