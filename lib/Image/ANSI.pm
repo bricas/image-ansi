@@ -396,7 +396,17 @@ sub as_png_full {
 	eval "require $font_class;";
 	croak $@ if $@;
 
-	my $font       = $font_class->new->as_gd;
+	my $font;
+	if( $font_class =~ /\.fnt$/ ) {
+		require GD::Font;
+		$font = GD::Font->load( $font_class );
+	}
+	elsif( UNIVERSAL::isa( $font_class, 'GD::Font' ) ) {
+		$font = $font_class;
+	}
+	else {
+		$font = $font_class->new->as_gd;
+	}
 	my $height     = $font->height;
 	my $width      = $font->width;
 
