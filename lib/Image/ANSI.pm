@@ -313,13 +313,7 @@ sub as_png_thumbnail {
 	%options   = @_ if @_ % 2 == 0;
 	$options{ zoom } = 1 unless defined $options{ zoom };
 
-	require GD;
-
-	my $font_class = $options{ font } || 'Image::ANSI::Font::8x16';
-	eval "require $font_class;";
-	croak $@ if $@;
-	my $font = $font_class->new;
-
+	my $font   = $self->_get_gd_font( $options{ font } );
 	my $height = int( $font->height / 8 + 0.5 );
 	$height    = 1 unless $height;
 	my $width  = $self->width;
@@ -394,24 +388,9 @@ sub as_png_full {
 	%options   = @_ if @_ % 2 == 0;
 	my $crop   = ( defined $options{ crop } and $options{ crop } > 0 and $options{ crop } < $self->height ) ? $options{ crop } : $self->height;
 
-	my $font_class = $options{ font } || 'Image::ANSI::Font::8x16';
-
-	require GD;
-
-	my $font;
-	if( $font_class =~ /\.fnt$/ ) {
-		$font = GD::Font->load( $font_class );
-	}
-	elsif( UNIVERSAL::isa( $font_class, 'GD::Font' ) ) {
-		$font = $font_class;
-	}
-	else {
-		eval "require $font_class;";
-		croak $@ if $@;
-		$font = $font_class->new->as_gd;
-	}
-	my $height     = $font->height;
-	my $width      = $font->width;
+	my $font   = $self->_get_gd_font( $options{ font } );
+	my $height = $font->height;
+	my $width  = $font->width;
 
 	my $image  = GD::Image->new( $self->width * $width, $crop * $height );
 
@@ -446,6 +425,28 @@ sub as_png_full {
 	return $image->png;
 }
 
+sub _get_gd_font {
+	my $self = shift;
+	my $font = shift;
+	$font    = 'Image::ANSI::Font::8x16' unless $font;
+
+	require GD;
+
+	if( UNIVERSAL::isa( $font, 'GD::Font' ) ) {
+		return $font;
+	}
+	elsif( $font =~ /\.fnt$/ ) {
+		return GD::Font->load( $font );
+	}
+	else {
+		eval "require $font;";
+		croak $@ if $@;
+		$font = $font->new;
+		return $font->as_gd;
+	}
+
+	return $font;
+}
 
 =head1 AUTHOR
 

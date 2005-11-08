@@ -1,10 +1,12 @@
 Revision history for Perl extension Image::ANSI
 
 0.05  Mon Nov 07 2005
+	- ans2png can now use a custom font and read from STDIN
 	- allow you to pass a font file name or a GD::Font
-	  to as_png_full
+	  to as_png_full and as_png_thumbnail
 	- removed width restriction
 	- added clear_line() method
+	- Many thanks for Ian Langworth
 
 0.04  Wed Sep 14 2005
 	- added ANSIMation capabilities
