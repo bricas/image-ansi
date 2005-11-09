@@ -6,15 +6,16 @@ ans2png - Convert ansi files to png
 
 =head1 SYNOPSIS
 
-    % ans2png [-t] [-f font.fnt] [file.ans] > file.png
+    % ans2png [-t] [-f font.fnt] [-p My::Palette] [file.ans] > file.png
 
 =head1 DESCRIPTION
 
 This is a simple command-line tool to help you convert
 ansi files to png images. Use the -t switch to create a
 thumbnail. Use the -f switch to specify a GD font to use.
-Omitting the filename (or using '-') will force it to
-convert from STDIN.
+Use -p to specify a custom palette class. Omitting the
+filename (or using '-') will force it to convert from
+STDIN.
 
 =cut
 
@@ -28,7 +29,7 @@ use Pod::Usage;
 our $VERSION = '0.01';
 
 my %options;
-getopts( 'tf:', \%options );
+getopts( 'tf:p:', \%options );
 
 my $file = shift;
 
@@ -43,8 +44,9 @@ else {
 binmode STDOUT;
 
 my %png = (
-	mode => $options{ t } ? 'thumbnail' : 'full',
-	font => $options{ f }
+	mode    => $options{ t } ? 'thumbnail' : 'full',
+	font    => $options{ f } || undef,
+	palette => $options{ p } || undef
 );
 
 print $ansi->as_png( %png );

@@ -1,5 +1,8 @@
 Revision history for Perl extension Image::ANSI
 
+0.06  Wed Nov 09 2005
+	- added -p (palette class) option to ans2png
+
 0.05  Mon Nov 07 2005
 	- added some basic tests
 	- ans2png can now use a custom font and read from STDIN
