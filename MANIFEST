@@ -14,5 +14,9 @@ lib/Image/ANSIMation/Parser.pm
 MANIFEST
 META.yml
 t/01-use.t
+t/10-read_basic.t
 t/98-pod_coverage.t
 t/99-pod.t
+t/data/test.txt
+t/data/test2lines.txt
+t/data/test81cols.txt
