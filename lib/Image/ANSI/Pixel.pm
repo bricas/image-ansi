@@ -96,7 +96,7 @@ Set the background color
 
 Set the blink property
 
-=head2 character( [$char] )
+=head2 char( [$char] )
 
 Set the character to be displayed
 
