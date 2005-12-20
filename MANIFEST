@@ -15,9 +15,15 @@ MANIFEST
 META.yml
 t/01-use.t
 t/10-read_basic.t
+t/11-read.t
+t/15-ansimation.t
 t/20-pixel.t
 t/98-pod_coverage.t
 t/99-pod.t
+t/data/ansimation1.ans
+t/data/test1.ans
+t/data/test2.ans
+t/data/test3.ans
 t/data/test.txt
 t/data/test2lines.txt
 t/data/test81cols.txt

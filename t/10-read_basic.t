@@ -1,4 +1,4 @@
-use Test::More tests => 8;
+use Test::More tests => 480;
 
 use strict;
 use warnings;
@@ -36,18 +36,15 @@ sub check_results {
 
 	my $ansi    = Image::ANSI->new( file => $file );
 
-	my $ok = 1;
 	for my $y ( 0..@$results - 1 ) {
 		for my $x ( 0..@{ $results->[ $y ] } - 1 ) {
 			my $pixel = $ansi->getpixel( $x, $y );
-			$ok = 0 unless ref $pixel eq 'Image::ANSI::Pixel';
-			$ok = 0 unless $pixel->char eq $results->[ $y ]->[ $x ];
-			$ok = 0 unless $pixel->fg == 7;
-			$ok = 0 unless $pixel->bg == 0;
-			$ok = 0 unless $pixel->blink == 0;
+			isa_ok( $pixel, 'Image::ANSI::Pixel' );
+			is( $pixel->char, $results->[ $y ]->[ $x ] );
+			is( $pixel->fg, 7 );
+			is( $pixel->bg, 0 );
+			is( $pixel->blink, 0 );
 		}
 	}
-
-	ok( $ok, $file );
 }
 
