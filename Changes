@@ -1,5 +1,9 @@
 Revision history for Perl extension Image::ANSI
 
+0.07  Tue Dec 20 2005
+	- increased test coverage
+	- fixed a handful of small bugs
+
 0.06  Wed Nov 09 2005
 	- added -p (palette class) option to ans2png
 

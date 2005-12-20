@@ -33,7 +33,7 @@ use warnings;
 
 use GD;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 __PACKAGE__->mk_accessors( qw( frames current_frame ) );
 

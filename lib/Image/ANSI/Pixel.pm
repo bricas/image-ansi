@@ -35,7 +35,7 @@ use constant ATTR_BLINK => 128;
 use constant ATTR_BG    => 112;
 use constant ATTR_FG    => 15;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 __PACKAGE__->mk_accessors( qw( char fg bg blink ) );
 

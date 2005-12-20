@@ -28,7 +28,7 @@ use constant S_END      => 3;
 
 use constant TABSTOP    => 8;
 
-our $VERSION  = '0.04';
+our $VERSION  = '0.05';
 my @accessors = qw( save_x save_y attr state );
 
 __PACKAGE__->mk_accessors( @accessors );

@@ -24,7 +24,7 @@ use warnings;
 use Image::ANSI;
 use Image::ANSIMation;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 __PACKAGE__->mk_accessors( qw( ansimation ) );
 
