@@ -31,8 +31,10 @@ sub new {
 
 	bless $self, $class;
 
+	$self->clear;
+
 	if( $palette ) {
-		for( 0..@$palette ) {
+		for( 0..@$palette - 1 ) {
 			$self->set( $_, $palette->[ $_ ] );
 		}
 	}
@@ -76,6 +78,20 @@ sub clear {
 	my $self = shift;
 
 	$self->{ data } = [];
+}
+
+=head2 colors( )
+
+General accessor to the palette of colors
+
+=cut
+
+sub colors {
+	my $self = shift;
+
+        $self->{ data } = $_[ 0 ] if @_;
+
+	return $self->{ data };
 }
 
 =head1 AUTHOR

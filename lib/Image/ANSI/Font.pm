@@ -38,6 +38,8 @@ sub new {
 
 	bless $self, $class;
 
+	$self->clear;
+
 	$self->chars( $chars ) if $chars;
 
 	return $self;
@@ -101,6 +103,9 @@ sub char {
 		my $chars = $index + 1;
 		$self->characters( $chars ) if $chars > $self->characters;
 		$self->{ _CHARS }->[ $index ] = $char;
+
+		my $height = scalar @$char;
+		$self->height( $height ) if $height > $self->height;
 	}
 	
 	return $self->{ _CHARS }->[ $index ];

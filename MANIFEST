@@ -16,8 +16,11 @@ META.yml
 t/01-use.t
 t/10-read_basic.t
 t/11-read.t
+t/13-ascii.t
 t/15-ansimation.t
 t/20-pixel.t
+t/21-font.t
+t/22-palette.t
 t/98-pod_coverage.t
 t/99-pod.t
 t/data/ansimation1.ans
