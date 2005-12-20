@@ -12,7 +12,8 @@ my $parser = Image::ANSIMation::Parser->new;
 isa_ok( $parser, 'Image::ANSIMation::Parser' );
 
 SKIP: {
-    skip 'GD version >= 2.33 needed for ansimation', 88, unless $GD::VERSION >= 2.33;
+    eval { my $image = GD::Image->new; $image->gifanimbegin; };
+    skip 'libgd 2.0.33 or higher required for ansimation support', 88, if $@;
 
 {
     my $ansimation = $parser->parse( file => 't/data/ansimation1.ans' );
