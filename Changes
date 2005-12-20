@@ -1,5 +1,8 @@
 Revision history for Perl extension Image::ANSI
 
+0.08  Tue Dec 20 2005
+	- fixed ansimation test (GD 2.33 or higher needed)
+
 0.07  Tue Dec 20 2005
 	- increased test coverage
 	- fixed a handful of small bugs

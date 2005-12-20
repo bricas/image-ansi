@@ -11,6 +11,9 @@ use GD qw( :cmp );
 my $parser = Image::ANSIMation::Parser->new;
 isa_ok( $parser, 'Image::ANSIMation::Parser' );
 
+SKIP: {
+    skip 'GD version >= 2.33 needed for ansimation', 88, unless $GD::VERSION >= 2.33;
+
 {
     my $ansimation = $parser->parse( file => 't/data/ansimation1.ans' );
     isa_ok( $ansimation, 'Image::ANSIMation' );
@@ -83,4 +86,6 @@ sub check_results {
         is( $pixel->bg, 2 );
         is( $pixel->blink, 0 );
     }
+}
+
 }
