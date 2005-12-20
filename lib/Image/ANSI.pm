@@ -155,7 +155,7 @@ sub pixel {
 	my $self = shift;
 	my( $x, $y, $pixel ) = @_;
 
-	return if $x > $self->width or $x < 0 or $y < 0;
+	return if ( !$pixel and $x > $self->width ) or $x < 0 or $y < 0;
 
 	my $image = $self->{ image };
  	if( defined $pixel ) {
@@ -339,7 +339,7 @@ sub as_png_thumbnail {
 		}
 	}
 
-	my $intensity = $font->intensity_map;
+	my $intensity = $self->_get_intensity_map( $options{ font } );
 
 	for my $y ( 0..$crop - 1 ) {
 		for my $x ( 0..$width - 1 ) { 
@@ -446,6 +446,22 @@ sub _get_gd_font {
 	}
 
 	return $font;
+}
+
+sub _get_intensity_map {
+	my $self = shift;
+	my $font = shift;
+	$font    = 'Image::ANSI::Font::8x16' unless $font;
+
+	if( UNIVERSAL::isa( $font, 'GD::Font' ) or $font =~ /\.fnt$/ ) {
+		return [];
+	}
+	else {
+		eval "require $font;";
+		croak $@ if $@;
+		$font = $font->new;
+		return $font->intensity_map;
+	}
 }
 
 =head1 AUTHOR

@@ -416,7 +416,7 @@ simulates a tab char (8 spaces).
 
 sub tab {
 	my $self = shift;
-	my $count = $self->x % TABSTOP;
+	my $count = ( $self->x + 1 ) % TABSTOP;
 	if( $count ) {
 		$count = TABSTOP - $count;
 		for( 1..$count ) {

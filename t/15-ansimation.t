@@ -1,10 +1,12 @@
-use Test::More tests => 43;
+use Test::More tests => 91;
 
 use strict;
 use warnings;
 
 use_ok( 'Image::ANSIMation' );
 use_ok( 'Image::ANSIMation::Parser' );
+
+use GD qw( :cmp );
 
 my $parser = Image::ANSIMation::Parser->new;
 isa_ok( $parser, 'Image::ANSIMation::Parser' );
@@ -18,6 +20,34 @@ isa_ok( $parser, 'Image::ANSIMation::Parser' );
 
     check_results( $ansimation->frames->[ 0 ] );
     check_results( $ansimation->frames->[ 1 ] );
+	
+	my $expected  = GD::Image->new( 't/data/ansimation1.gif' );
+	my $generated = GD::Image->new( $ansimation->as_gif );
+    ok( !( $expected->compare( $generated ) & GD_CMP_IMAGE ) );
+}
+
+{
+    my $ansimation = $parser->parse( file => 't/data/ansimation2.ans' );
+    isa_ok( $ansimation, 'Image::ANSIMation' );
+    is( $ansimation->width, 4 );
+    is( $ansimation->height, 1 );
+    is( scalar @{ $ansimation->frames }, 2 );
+
+    check_results( $ansimation->frames->[ 0 ] );
+    check_results( $ansimation->frames->[ 1 ] );
+}
+
+{
+    my $ansimation = Image::ANSIMation->new( file => 't/data/ansimation1.ans' );
+    isa_ok( $ansimation, 'Image::ANSIMation' );
+    is( $ansimation->width, 4 );
+    is( $ansimation->height, 1 );
+    is( scalar @{ $ansimation->frames }, 2 );
+	
+	for( qw( 0 1 0 ) ) {
+	    my $frame = $ansimation->next_frame;
+		is( $frame, $ansimation->frames->[ $_ ] );
+	}
 }
 
 sub check_results {

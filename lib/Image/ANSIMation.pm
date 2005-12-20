@@ -56,7 +56,10 @@ Creates a new ANSIMation. Currently only reads in data.
 
 sub new {
 	my $class = shift;
-	my $self  = $class->SUPER::new( @_ );
+
+	my $self  = {};
+	bless $self, $class;
+
 	$self->frames( [ ] );
 	$self->current_frame( 0 );
 

@@ -1,4 +1,4 @@
-use Test::More tests => 36;
+use Test::More tests => 40;
 
 use strict;
 use warnings;
@@ -39,11 +39,16 @@ use_ok( 'Image::ANSI::Font::8x16' );
 	is( scalar @{ $font->chars }, 256 );
 	is( ref $font->intensity_map, 'ARRAY' );
 
+	is_deeply( $font->char( 0 ), [ ( 0 ) x 8 ] );
+
 	my $gd = $font->as_gd;
 	isa_ok( $gd, 'GD::Font' );
 	is( $gd->width, 8 );
 	is( $gd->height, 8 );
 	is( $gd->nchars, 256 );
+
+	$font->char( 0, [ ( 1 ) x 8 ] );
+	is_deeply( $font->char( 0 ), [ ( 1 ) x 8 ] );
 }
 
 {
@@ -56,9 +61,14 @@ use_ok( 'Image::ANSI::Font::8x16' );
 	is( scalar @{ $font->chars }, 256 );
 	is( ref $font->intensity_map, 'ARRAY' );
 
+	is_deeply( $font->char( 0 ), [ ( 0 ) x 16 ] );
+
 	my $gd = $font->as_gd;
 	isa_ok( $gd, 'GD::Font' );
 	is( $gd->width, 8 );
 	is( $gd->height, 16 );
 	is( $gd->nchars, 256 );
+
+	$font->char( 0, [ ( 1 ) x 16 ] );
+	is_deeply( $font->char( 0 ), [ ( 1 ) x 16 ] );
 }

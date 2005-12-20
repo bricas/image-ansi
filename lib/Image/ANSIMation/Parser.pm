@@ -40,7 +40,7 @@ we consider that a new frame.
 sub set_position {
 	my $self = shift;
 
-	if( $_[ 0 ] == 1 && $_[ 0 ] == 1 ) {
+	if( $_[ 0 ] == 1 && $_[ 1 ] == 1 ) {
 		$self->store_frame;
 	}
 
@@ -55,6 +55,7 @@ Parses a file and returns the ansimation.
 
 sub parse {
 	my $self = shift;
+	$self->ansimation( undef );
 	$self->SUPER::parse( @_ );
 	$self->store_frame;
 	return $self->ansimation;
