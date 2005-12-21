@@ -19,7 +19,7 @@ use warnings;
 use GD;
 use File::Temp;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 __PACKAGE__->mk_accessors( qw( width height characters ) );
 
@@ -151,7 +151,7 @@ sub as_gd {
 
 	binmode( $temp );
 
-	print $temp pack( 'LLLL', $self->characters, 0, $self->width, $self->height );
+	print $temp pack( 'VVVV', $self->characters, 0, $self->width, $self->height );
 	for my $char ( @{ $self->chars } ) {
 		print $temp pack( 'C*', split( //, sprintf( '%08b', $_ ) ) ) for @$char;
 	}
