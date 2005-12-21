@@ -25,7 +25,7 @@ isa_ok( $parser, 'Image::ANSIMation::Parser' );
     check_results( $ansimation->frames->[ 1 ] );
 
 	SKIP: {
-		skip 'libgd 2.0.33 or higher required for ansimation support', 1, unless #$cananim;
+		skip 'libgd 2.0.33 or higher required for ansimation support', 1, unless $cananim;
 		my $expected  = GD::Image->new( 't/data/ansimation1.gif' );
 		my $generated = GD::Image->new( $ansimation->as_gif );
 		ok( !( $expected->compare( $generated ) & GD_CMP_IMAGE ) );
