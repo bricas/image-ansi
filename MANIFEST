@@ -10,6 +10,7 @@ lib/Image/ANSI/Palette.pm
 lib/Image/ANSI/Palette/VGA.pm
 lib/Image/ANSI/Parser.pm
 lib/Image/ANSI/Pixel.pm
+lib/Image/ANSI/Utils.pm
 lib/Image/ANSIMation/Parser.pm
 MANIFEST
 META.yml
@@ -23,6 +24,7 @@ t/15-ansimation.t
 t/20-pixel.t
 t/21-font.t
 t/22-palette.t
+t/30-write.t
 t/98-pod_coverage.t
 t/99-pod.t
 t/data/ansimation1.ans

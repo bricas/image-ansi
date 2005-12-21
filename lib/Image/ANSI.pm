@@ -56,6 +56,7 @@ use warnings;
 
 use Carp;
 use File::SAUCE;
+use Image::ANSI::Utils;
 
 our $VERSION = '0.09';
 
@@ -127,6 +128,79 @@ sub read {
 	$self = Image::ANSI::Parser->new( @_ );
 
 	return $self;
+}
+
+=head2 write( %options )
+
+Writes the ANSI data to a file, filehandle or string.
+
+=cut
+
+sub write {
+	my $self    = shift;
+	my %options = @_;
+	my $file    = $self->create_io_object( \%options, '<' );
+	
+	$file->print( $self->as_string( @_ ) );
+}
+
+=head2 as_string( %options )
+
+Returns the ANSI output as a scalar.
+
+=cut
+
+sub as_string {
+	my $self    = shift;
+	my %options = @_;
+	my $output  = "\x1b[0m";
+
+	my $prevattr = '';
+	for my $y ( 0..$self->height - 1 ) {
+		my $max_x = $self->max_x( $y );
+		for my $x ( 0..$max_x ) {
+			my $pixel = $self->getpixel( $x, $y );
+			my( $char, $attr );
+                        if( defined $pixel ) {
+                                my @args;
+                                push @args, 5 if $pixel->blink;
+
+                                my $fg = $pixel->fg;
+				if( $fg > 7 ) {
+					push @args, 1;
+					$fg -= 8;
+				}
+				else {
+					push @args, 0;
+				}
+				push @args, $fg + 30;
+
+                                my $bg = $pixel->bg;
+                                $bg   -= 8 if $bg > 7;
+				push @args, $bg + 40;
+
+                                $attr = join( ';', @args );
+				$char = $pixel->char;
+			}
+			else {
+				$attr = 0;
+				$char = ' ';
+			}
+
+			if( $attr eq $prevattr ) {
+				$output .= $char;
+			}
+			else {
+				$output .= "\x1b[${attr}m$char";
+			}
+
+			$prevattr = $attr;
+		}
+		$output .= "\n" unless $max_x == 79;
+	}
+
+	$output .= "\x1b[0m";
+	return $output;
 }
 
 =head2 putpixel( $x, $y, $pixel )

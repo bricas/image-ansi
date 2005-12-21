@@ -2,6 +2,8 @@ Revision history for Perl extension Image::ANSI
 
 0.09  Wed Dec 21 2005
 	- fixed pack string for GD fonts
+	- added writing capabilities (finally) with some
+	  basic RLE compression
 
 0.08  Tue Dec 20 2005
 	- fixed ansimation test (GD 2.33 or higher needed)

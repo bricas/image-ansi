@@ -16,9 +16,9 @@ use base qw( Class::Accessor );
 use warnings;
 use strict;
 
-use Carp;
 use Image::ANSI;
 use Image::ANSI::Pixel;
+use Image::ANSI::Utils;
 
 # State definitions
 use constant S_TXT      => 0;
@@ -28,7 +28,7 @@ use constant S_END      => 3;
 
 use constant TABSTOP    => 8;
 
-our $VERSION  = '0.05';
+our $VERSION  = '0.06';
 my @accessors = qw( save_x save_y attr state );
 
 __PACKAGE__->mk_accessors( @accessors );
@@ -90,7 +90,7 @@ Reads in a file, handle or string
 sub parse {
 	my $self    = shift;
 	my %options = @_;
-	my $file    = $self->_create_io_object( \%options, '<' );
+	my $file    = $self->create_io_object( \%options, '<' );
 
 	my( $argbuf, $ch );
 
@@ -483,31 +483,6 @@ sub pixel {
 	}
 
 	return $self->ansi->getpixel( $x, $y );
-}
-
-sub _create_io_object {
-	my $self    = shift;
-	my %options = %{ $_[ 0 ] };
-	my $perms   = $_[ 1 ];
-
-	my $file;
-
-	# use appropriate IO object for what we get in
-	if( exists $options{ file } ) {
-		$file = IO::File->new( $options{ file }, $perms ) || croak "$!";
-	}
-	elsif( exists $options{ string } ) {
-		$file = IO::String->new( $options{ string }, $perms );
-	}
-	elsif( exists $options{ handle } ) {
-		$file = $options{ handle };
-	}
-	else {
-		croak( "No valid read type. Must be one of 'file', 'string' or 'handle'." );
-	}
-
-	binmode( $file );
-	return $file;
 }
 
 =head1 AUTHOR

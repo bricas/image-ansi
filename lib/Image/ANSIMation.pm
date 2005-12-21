@@ -32,8 +32,9 @@ use strict;
 use warnings;
 
 use GD;
+use Image::ANSI::Utils;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 __PACKAGE__->mk_accessors( qw( frames current_frame ) );
 
@@ -89,6 +90,33 @@ sub read {
 	$self = Image::ANSIMation::Parser->new( @_ );
 
 	return $self;
+}
+
+=head2 write( %options )
+
+Writes the ANSI data to a file, filehandle or string.
+
+=cut
+
+sub write {
+	my $self    = shift;
+	my %options = @_;
+	my $file    = $self->create_io_object( \%options, '<' );
+	
+	$file->print( $self->as_string( @_ ) );
+}
+
+=head2 as_string( %options )
+
+Returns the ANSI output as a scalar.
+
+=cut
+
+sub as_string {
+	my $self    = shift;
+	my %options = @_;
+	
+	return join ( "\x1b[1;1H", map { $_->as_string } @{ $self->frames } );
 }
 
 =head2 add_frame( $frame )

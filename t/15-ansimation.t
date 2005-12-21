@@ -8,12 +8,11 @@ use_ok( 'Image::ANSIMation::Parser' );
 
 use GD qw( :cmp );
 
+eval { my $image = GD::Image->new; $image->gifanimbegin; };
+my $cananim = $@ ? 0 : 1;
+
 my $parser = Image::ANSIMation::Parser->new;
 isa_ok( $parser, 'Image::ANSIMation::Parser' );
-
-SKIP: {
-    eval { my $image = GD::Image->new; $image->gifanimbegin; };
-    skip 'libgd 2.0.33 or higher required for ansimation support', 88, if $@;
 
 {
     my $ansimation = $parser->parse( file => 't/data/ansimation1.ans' );
@@ -24,10 +23,13 @@ SKIP: {
 
     check_results( $ansimation->frames->[ 0 ] );
     check_results( $ansimation->frames->[ 1 ] );
-	
-	my $expected  = GD::Image->new( 't/data/ansimation1.gif' );
-	my $generated = GD::Image->new( $ansimation->as_gif );
-    ok( !( $expected->compare( $generated ) & GD_CMP_IMAGE ) );
+
+	SKIP: {
+		skip 'libgd 2.0.33 or higher required for ansimation support', 1, unless #$cananim;
+		my $expected  = GD::Image->new( 't/data/ansimation1.gif' );
+		my $generated = GD::Image->new( $ansimation->as_gif );
+		ok( !( $expected->compare( $generated ) & GD_CMP_IMAGE ) );
+	}
 }
 
 {
@@ -87,6 +89,4 @@ sub check_results {
         is( $pixel->bg, 2 );
         is( $pixel->blink, 0 );
     }
-}
-
 }
