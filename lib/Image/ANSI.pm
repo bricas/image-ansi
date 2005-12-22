@@ -142,7 +142,7 @@ Writes the ANSI data to a file, filehandle or string.
 sub write {
 	my $self    = shift;
 	my %options = @_;
-	my $file    = $self->create_io_object( \%options, '<' );
+	my $file    = $self->create_io_object( \%options, '>' );
 	
 	$file->print( $self->as_string( @_ ) );
 }
