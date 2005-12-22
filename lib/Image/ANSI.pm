@@ -27,6 +27,9 @@ Image::ANSI - Load, create, manipulate and save ANSI files
 
 	# use a custom font
 	my $png = $img->as_png( mode => 'full', font => 'Image::ANSI::Font::8x8' );
+	
+	# write the ANSI to a file
+	$img->write( file => 'out.ans' );
 
 =head1 DESCRIPTION
 
@@ -58,7 +61,7 @@ use Carp;
 use File::SAUCE;
 use Image::ANSI::Utils;
 
-our $VERSION = '0.09';
+our $VERSION = '0.1';
 
 =head1 METHODS
 

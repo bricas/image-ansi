@@ -17,8 +17,8 @@ use warnings;
 
 use base qw( Exporter );
 
-our @EXPORT = qw( create_io_object );
-our $VERSIN = '0.01';
+our @EXPORT  = qw( create_io_object );
+our $VERSION = '0.02';
 
 use IO::File;
 use IO::String;
