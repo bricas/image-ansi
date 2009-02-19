@@ -2,7 +2,7 @@ package Image::ANSI;
 
 =head1 NAME
 
-Image::ANSI - Load, create, manipulate and save ANSI files
+Image::ANSI - (DEPRECATED) Load, create, manipulate and save ANSI files
 
 =head1 DEPRECATION NOTICE
 
