@@ -34,7 +34,7 @@ use warnings;
 use GD;
 use Image::ANSI::Utils;
 
-our $VERSION = '0.03';
+our $VERSION = '0.10';
 
 __PACKAGE__->mk_accessors( qw( frames current_frame ) );
 
@@ -238,7 +238,7 @@ sub as_gif {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

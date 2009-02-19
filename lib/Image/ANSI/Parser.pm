@@ -28,7 +28,7 @@ use constant S_END      => 3;
 
 use constant TABSTOP    => 8;
 
-our $VERSION  = '0.06';
+our $VERSION  = '0.10';
 my @accessors = qw( save_x save_y attr state );
 
 __PACKAGE__->mk_accessors( @accessors );
@@ -495,7 +495,7 @@ sub pixel {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

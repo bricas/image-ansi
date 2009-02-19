@@ -15,7 +15,7 @@ Image::ANSI::Palette::VGA - The default VGA palette
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.10';
 
 my $palette = [
 	[ 0x00, 0x00, 0x00 ], # black
@@ -62,7 +62,7 @@ sub new {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

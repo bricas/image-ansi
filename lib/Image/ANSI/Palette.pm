@@ -14,7 +14,7 @@ Image::ANSI::Palette - A base class palettes
 use strict;
 use warnings;
 
-our $VERSION = '0.03';
+our $VERSION = '0.10';
 
 =head1 METHODS
 
@@ -104,7 +104,7 @@ sub colors {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

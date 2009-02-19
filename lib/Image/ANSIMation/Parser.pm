@@ -24,7 +24,7 @@ use warnings;
 use Image::ANSI;
 use Image::ANSIMation;
 
-our $VERSION = '0.02';
+our $VERSION = '0.10';
 
 __PACKAGE__->mk_accessors( qw( ansimation ) );
 
@@ -93,7 +93,7 @@ sub store_frame {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

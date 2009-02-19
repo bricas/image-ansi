@@ -1,6 +1,9 @@
 Revision history for Perl extension Image::ANSI
 
-0.1   Thu Dec 22 2005
+0.10  Thu Feb 19 2009
+    [ DEPRECATION NOTICE ]
+    This module has been replaced by Image::TextMode.
+
 	- pod fixes
 	- fixed write() to actually write to files
 

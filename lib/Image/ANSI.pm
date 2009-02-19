@@ -4,6 +4,10 @@ package Image::ANSI;
 
 Image::ANSI - Load, create, manipulate and save ANSI files
 
+=head1 DEPRECATION NOTICE
+
+    This module has been replaced by L<Image:TextMode>
+
 =head1 SYNOPSIS
 
 	use Image::ANSI;
@@ -61,7 +65,7 @@ use Carp;
 use File::SAUCE;
 use Image::ANSI::Utils;
 
-our $VERSION = '0.1';
+our $VERSION = '0.10';
 
 =head1 METHODS
 
@@ -551,7 +555,7 @@ sub _get_intensity_map {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

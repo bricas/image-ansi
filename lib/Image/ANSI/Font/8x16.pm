@@ -15,7 +15,7 @@ Image::ANSI::Font::8x16 - The default 8x16 font
 use strict;
 use warnings;
 
-our $VERSION = '0.01';
+our $VERSION = '0.10';
 
 my $chars = [
 	[ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ],
@@ -303,7 +303,7 @@ sub new {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2004-2009 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
