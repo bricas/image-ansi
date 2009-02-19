@@ -6,7 +6,7 @@ Image::ANSI - Load, create, manipulate and save ANSI files
 
 =head1 DEPRECATION NOTICE
 
-    This module has been replaced by L<Image:TextMode>
+    This module has been replaced by Image:TextMode.
 
 =head1 SYNOPSIS
 
